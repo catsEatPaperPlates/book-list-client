@@ -6,11 +6,21 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-   
+    
+    <script id="book-template" type="text/x-handlebars-template">
+        <h1>{{title}} by {{author}}</h1>
+        <h2>{{totalCount}}</h2>
+    </script>
+       
 </head>
 <body>
-    <h1>test</h1>
+    <h1>Book Section</h1>
+    <section id="books">
 
+    </section>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="scripts/models/book.js"></script>
     <script src="scripts/views/book-view.js"></script>
     <script src="scripts/views/error-view.js"></script>
