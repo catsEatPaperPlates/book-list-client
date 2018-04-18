@@ -1,31 +1,35 @@
-var app = {};
+var app = app || {};
 
 const ENV = {};
 
-ENV.isProduction = window.location.protocol === 'window.location.href';
-ENV.productionApiUrl = 'https://catseatpaperplates.github.io/book-list-client';
-ENV.developmentApiUrl = 'https://ja-booklist.herokuapp.com';
+ENV.isProduction = window.location.protocol === 'https:';
+ENV.productionApiUrl = '';
+ENV.developmentApiUrl = 'http://localhost:3000';
 ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
+
+$.getJSON(ENV.apiUrl + '/api/v1/books').then(books => {
+  console.log(books);
+});
 
 (function(module) {
   
-    Book.prototype.toHtml = function() {
-      let template = Handlebars.compile($('#book-template').text());
-      return template(this);
-    }
-  
-    Book.all = [];
-  
-    Book.loadAll = rows => {
-      Book.all = rows.sort((a, b) => b.title - a.title).map(book => new Book(book));
-    }
-  
-    Book.fetchAll = callback =>
-      $.get(`${ENV.apiUrl}/books`)
-        .then(Book.loadAll)
-        .then(callback)
-        .catch(errorCallback);
-  
+  function Book(rawDataObj) {
+  this.author = rawDataObj.author;
+  this.title = rawDataObj.title;
+  }
+
+ Book.prototype.toHTML = function() {
+  let template = Handlebars.compile($('#book-template').text());
+  return template(this);
+ }
+
+ Book.fetchAll = function() {
+   $.getJSON(ENV.apiUrl + '/api/v1/books')
+   .then(books => {
+    Book.all = books.map(bookInstance => new Book(bookInstance));
+   })
+ }
+  // Object.assign(this, rawDataObj); MDN assign method for ES6
     module.Book = Book;
   })(app)
  
