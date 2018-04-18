@@ -23,12 +23,17 @@ $.getJSON(ENV.apiUrl + '/api/v1/books').then(books => {
   return template(this);
  }
 
+ Book.loadAll = function(books) {
+  Book.all = books.sort((a,b) => b.title-a.title).map(rawBook => new Book(rawBook));
+  }
+
  Book.fetchAll = function() {
    $.getJSON(ENV.apiUrl + '/api/v1/books')
    .then(books => {
-    Book.all = books.map(bookInstance => new Book(bookInstance));
+    Book.loadAll(books);
    })
  }
+
   // Object.assign(this, rawDataObj); MDN assign method for ES6
     module.Book = Book;
   })(app)
