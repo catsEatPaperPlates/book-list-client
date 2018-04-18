@@ -3,7 +3,7 @@ var app = app || {};
 const ENV = {};
 
 ENV.isProduction = window.location.protocol === 'https:';
-ENV.productionApiUrl = 'https://catseatpaperplates.github.io/book-list-client';
+ENV.productionApiUrl = 'https://ja-booklist.herokuapp.com/';
 ENV.developmentApiUrl = 'http://localhost:3000';
 ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
 
